@@ -9,4 +9,4 @@ PackageName: UnpackSinTiles
 PackageOwner: lazarusA
 PackageUUID: 017367d4-aa44-5400-a2e3-1f6255c9d3f1
 _commit: v0.9.1
-_src_path: https://github.com/abelsiqueira/BestieTemplate.jl
+_src_path: https://github.com/JuliaBesties/BestieTemplate.jl
