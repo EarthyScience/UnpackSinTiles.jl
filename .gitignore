@@ -7,3 +7,4 @@ docs/build/
 node_modules
 .CondaPkg
 .vscode
+*.png
