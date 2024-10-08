@@ -77,7 +77,7 @@ function updateAfterBurn!(beforeBurn, afterBurn; burnWindow = 30)
     return nothing
 end
 
-function averageWindows(sMatrix, n::Int)
+function averageWindows(sMatrix, n::Int; mask=nothing)
     rows, cols = size(sMatrix)
     # Check if the matrix dimensions are divisible by n
     if rows % n != 0 || cols % n != 0
@@ -86,21 +86,40 @@ function averageWindows(sMatrix, n::Int)
     # Calculate the size of the output matrix
     new_rows, new_cols = rows ÷ n, cols ÷ n
     # Initialize the output matrix
-    result = fill(NaN32, new_rows, new_cols)
+    result = fill(NaN32, new_rows, new_cols) # ? NaN32 here and then missing ?
+    n_smask = if isnothing(mask)
+        new_rows * new_cols
+    end
     # Iterate over the windows and calculate averages
     for i in 1:new_rows
         for j in 1:new_cols
             window = @view sMatrix[(i-1)*n+1:i*n, (j-1)*n+1:j*n]
-            μ = mean(window)
-            result[i, j] = iszero(μ) ? NaN32 : μ 
+            if !isnothing(mask)
+                smask = @view mask[(i-1)*n+1:i*n, (j-1)*n+1:j*n]
+                window .*= smask
+                n_smask = sum(smask)
+            end
+            μ = sum(window) / n_smask # this is the mean per type, given by mask.
+            result[i, j] = iszero(μ) ? NaN32 : μ
         end
     end
     return result
 end
 
-function agg(μBurn, afterBurn, tsteps; res = 60)
+# TODO: include masks here! land, pfts.
+# MODIS: LAND_COVER TYPE GLOBAL 500m
+function aggTile(μBurn, afterBurn, tsteps; res = 60)
     @showprogress for t_step in 1:tsteps
         μBurn[:,:,t_step] = averageWindows(afterBurn[t_step], res)
     end
     return μBurn
+end
+
+
+function _compute_mask(m, to_vals)
+    return m .== to_vals
+end
+
+function compute_mask(m, to_vals::AbstractVector)
+    return m .∈ Ref(to_vals)
 end
