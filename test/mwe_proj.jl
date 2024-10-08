@@ -1,6 +1,6 @@
 using DimensionalData
 using DimensionalData.Lookups
-using Rasters, GDAL, ArchGDAL
+using Rasters, GDAL, ArchGDAL # add LERC_jll@3 # do this one first, otherwise it might not install the packages!
 
 SINUSOIDAL_CRS = ProjString("+proj=sinu +lon_0=0 +x_0=0 +y_0=0 +a=6371007.181 +b=6371007.181 +units=m +no_defs")
 # Here we make the ranges one step longer than we need and shorten them
