@@ -1,4 +1,4 @@
-export parse_metadata
+export parse_metadata, getTileMetadata
 
 """
     parse_metadata(in_hdf; metadata_field = "StructMetadata.0")
@@ -43,4 +43,12 @@ function parse_metadata(in_hdf; metadata_field = "StructMetadata.0")
         end
     end
     return result
+end
+
+function getTileMetadata(tile, in_date, root_path)
+    o = openTile(tile, in_date, root_path)
+    meta = parse_metadata(o)
+    m = meta["GridStructure"]["GRID_1"]
+    o.end()
+    return m
 end

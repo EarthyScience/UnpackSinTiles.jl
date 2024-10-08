@@ -8,7 +8,7 @@ function getTilePath(tile, in_date, root_path)
     list_files = readdir(path_month)
     # find name file for the given tile
     index = findfirst(x -> occursin(tile, x), list_files)
-    if length(index)>0 # it should be only 1
+    if !isnothing(index) && length(index) == 1 # it should be only 1
         tile_full_name = list_files[index]
         full_path = joinpath(path_month, tile_full_name)
         return full_path
@@ -23,7 +23,11 @@ end
 """
 function openTile(tile, in_date, root_path)
     full_path = getTilePath(tile, in_date, root_path)
-    return hdf(full_path)
+    if !isnothing(full_path)
+        return hdf(full_path)
+    else
+        return nothing
+    end
 end
 
 """
@@ -40,19 +44,24 @@ end
 """
 function loadTileVariable(tile, in_date, root_path, variable; close_file = true)
     hdf_tile = openTile(tile, in_date, root_path)
-    hdf_data = hdf_tile.select(variable).get()
-    if close_file
-        hdf_tile.end() # close hdf tile
+    if !isnothing(hdf_tile)
+        hdf_data = hdf_tile.select(variable).get()
+        if close_file
+            hdf_tile.end() # close hdf tile
+        end
+        hdf_data_jl = pyconvert(Array, hdf_data)
+        return hdf_data_jl
+    else
+        return nothing
     end
-    return hdf_data
 end
 
 function loadTileBurntYear(months_r, tile, root_path; variable = "Burn Date")
     burnYear = [spzeros(Int16, 2400,2400) for _ in 1:12]
     for i in 1:12
-        bb_dates = loadTileVariable(tile, months_r[i], root_path, variable)
+        bb_dates = loadTileVariable(tile, months_r[i], root_path, variable) # `nothing` propagates 'till here!
         if !isnothing(bb_dates)
-            burnYear[i][:,:] = bb_dates
+            burnYear[i][:,:] .= bb_dates
         end
     end
     return burnYear
