@@ -10,7 +10,7 @@ end
 
 
 """
-    getTileInterval(hv_tile::String, n_h::Int=36, n_v::Int=18, h_bound::UnitRange=1:1440, v_bound::UnitRange=1:720)
+    getTileInterval(hv_tile::String; n_h::Int=36, n_v::Int=18, h_bound::UnitRange=1:1440, v_bound::UnitRange=1:720)
 
 Given a label in the format "hXXvYY", this function calculates the corresponding intervals
 in the specified ranges `h_bound` and `v_bound`.
@@ -26,7 +26,7 @@ in the specified ranges `h_bound` and `v_bound`.
 - A tuple of two ranges: the interval in `h_bound` and the interval in `v_bound`.
 
 """
-function getTileInterval(hv_tile, n_h=36, n_v=18, h_bound=1:1440, v_bound=1:720)
+function getTileInterval(hv_tile; n_h=36, n_v=18, h_bound=1:1440, v_bound=1:720)
     # Extract the h and v indices from the label (assuming format "hXXvYY")
     h_index = parse(Int, hv_tile[2:3])
     v_index = parse(Int, hv_tile[5:6])
