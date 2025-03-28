@@ -8,3 +8,5 @@ node_modules
 .CondaPkg
 .vscode
 *.png
+.qodo
+*.hdf

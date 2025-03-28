@@ -1,11 +1,11 @@
-# Don't forget to run
-#
-#     pkg> dev ..
-#
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-LiveServer = "16fef848-5104-11e9-1b77-fb7a48bbb589"
+DocumenterVitepress = "4710194d-e776-4893-9690-8d956a29c365"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+Rasters = "a3a2b9e3-a471-40c9-b274-f788e487c689"
 UnpackSinTiles = "017367d4-aa44-5400-a2e3-1f6255c9d3f1"
 
-[compat]
-Documenter = "1"
+[sources]
+UnpackSinTiles = {path = ".."}
