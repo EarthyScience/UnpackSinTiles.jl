@@ -24,7 +24,7 @@ end
 function openTile(tile, in_date, root_path)
     full_path = getTilePath(tile, in_date, root_path)
     if !isnothing(full_path)
-        return hdf(full_path)
+        return open_hdf(full_path)
     else
         return nothing
     end

@@ -8,9 +8,10 @@ module UnpackSinTiles
     using Dates
     using SparseArrays
 
-    hdf(f) = @pyconst(pyimport("pyhdf.SD").SD)(f)
-    export hdf
+    open_hdf(f) = @pyconst(pyimport("pyhdf.SD").SD)(f)
+    export open_hdf
 
+    include("loadhdf.jl")
     include("loadTile.jl")
     include("metadata.jl")
     include("pixelOperations.jl")
