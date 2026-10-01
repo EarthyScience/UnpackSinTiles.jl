@@ -1,7 +1,7 @@
 name = "UnpackSinTiles"
 uuid = "017367d4-aa44-5400-a2e3-1f6255c9d3f1"
-authors = ["Lazaro Alonso <lazarus.alon@gmail.com> and contributors"]
 version = "0.1.0"
+authors = ["Lazaro Alonso <lazarus.alon@gmail.com> and contributors"]
 
 [deps]
 CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
@@ -19,8 +19,8 @@ CondaPkg = "0.2"
 DataStructures = "0.18"
 ProgressMeter = "1.10"
 PythonCall = "0.9"
+SparseArrays = "1.10"
 Statistics = "1.10"
 YAXArrays = "0.6.1"
-Zarr = "0.9"
-SparseArrays = "1.10"
+Zarr = "0.9, 0.10"
 julia = "1.10"
